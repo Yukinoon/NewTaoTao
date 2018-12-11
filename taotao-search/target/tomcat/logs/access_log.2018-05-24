@@ -1,0 +1,4 @@
+127.0.0.1 - - [24/May/2018:11:27:26 +0800] "GET /search.html?keyword=htc HTTP/1.0" 200 35391 http-bio-8085-exec-1 650
+127.0.0.1 - - [24/May/2018:11:27:27 +0800] "GET /favicon.ico HTTP/1.0" 404 973 http-bio-8085-exec-2 2
+127.0.0.1 - - [24/May/2018:14:38:48 +0800] "GET /search.html?keyword=htc HTTP/1.0" 200 35391 http-bio-8085-exec-1 333
+127.0.0.1 - - [24/May/2018:15:40:59 +0800] "GET /search.html?keyword=apple HTTP/1.0" 200 39517 http-bio-8085-exec-1 378

@@ -1,0 +1,5 @@
+127.0.0.1 - - [12/Jun/2018:23:21:17 +0800] "GET / HTTP/1.0" 404 951 http-bio-8085-exec-1 29
+127.0.0.1 - - [12/Jun/2018:23:21:17 +0800] "GET /favicon.ico HTTP/1.0" 404 973 http-bio-8085-exec-2 1
+127.0.0.1 - - [12/Jun/2018:23:24:38 +0800] "GET /search.html?keyword=%E4%B8%89%E6%98%9F HTTP/1.0" 200 38868 http-bio-8085-exec-3 585
+127.0.0.1 - - [12/Jun/2018:23:24:55 +0800] "GET /search.html?keyword=%E4%B8%89%E6%98%9F HTTP/1.0" 200 38868 http-bio-8085-exec-4 48
+127.0.0.1 - - [12/Jun/2018:23:26:14 +0800] "GET / HTTP/1.0" 404 951 http-bio-8085-exec-5 3

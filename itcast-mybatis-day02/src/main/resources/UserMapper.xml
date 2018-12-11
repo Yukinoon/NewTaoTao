@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="cn.itcast.mybatis.mapper.UserMapper">
+
+	<!-- <sql id="userColumns">id,user_name,password,name,age,sex,birthday,created,updated</sql> -->
+	
+	<!-- 开启二级缓存 -->
+	<cache/>
+
+	<!-- 
+		type: 将结果集映射的java对象类型
+		id：resultMap唯一标识
+	 -->
+	<resultMap type="User" id="userResultMap" autoMapping="true">
+		<!-- 
+			指定结果集中的id
+			column：查询结果集中字段名称
+			property：java对象中属性名
+		 -->
+		<id column="id" property="id"/>
+		<result column="user_name" property="userName"/>
+	</resultMap>
+
+	<select id="queryUserById" resultMap="userResultMap" parameterType="Long">
+		SELECT <include refid="my.common.userColumns"/> FROM tb_user WHERE id = #{id}
+	</select>
+	
+	<!-- <select id="queryUserById" resultType="User" parameterType="Long">
+		SELECT * FROM tb_user WHERE id = #{id}
+	</select> -->
+	
+	<insert id="saveUser" parameterType="cn.itcast.mybatis.pojo.User">
+		INSERT INTO tb_user (
+			<include refid="my.common.userColumns"/>
+		)
+		VALUES
+			(
+				NULL,
+				#{userName},
+				#{password},
+				#{name},
+				#{age},
+				#{sex},
+				#{birthday},
+				NOW(),
+				NOW()
+			);
+	</insert>
+	
+	<update id="updateUser" parameterType="cn.itcast.mybatis.pojo.User">
+		UPDATE tb_user
+		SET 
+		 user_name = #{userName},
+		 password = #{password},
+		 name = #{name},
+		 age = #{age},
+		 sex = #{sex},
+		 birthday = #{birthday},
+		 updated = NOW()
+		WHERE
+			id = #{id}
+	</update>
+	
+	<update id="updateUser2" parameterType="cn.itcast.mybatis.pojo.User">
+		UPDATE tb_user
+		<set>
+			<if test="userName != null and userName != ''">
+				user_name = #{userName},
+			</if>
+			<if test="age != null and age != ''">
+				age = #{age},
+			</if>
+			<if test="password != null and password != ''">
+				password = #{password},
+			</if>
+		</set> 
+		WHERE
+			id = #{id}
+	</update>
+	
+	<delete id="deleteUserById">
+		DELETE FROM tb_user WHERE id = #{id}
+	</delete>
+	
+	<select id="queryUserListLikeName" parameterType="String" resultType="User">
+		SELECT <include refid="my.common.userColumns"/> FROM tb_user WHERE name LIKE '%${name}%'
+	</select>
+	
+	<select id="login" resultType="User">
+		SELECT <include refid="my.common.userColumns"/> FROM tb_user WHERE user_name = #{userName} AND password = #{passwd}
+	</select>
+	
+	<select id="queryUserLikeName" resultType="User">
+		SELECT * FROM tb_user WHERE sex = 1 
+		<if test="name !=null and name != ''">
+			AND name LIKE '%${name}%'
+		</if>
+	</select>
+	
+	<select id="queryUserLikeNameAndAge" resultType="User">
+		SELECT * FROM tb_user WHERE sex = 1 
+		<choose>
+			<when test="age !=null and age != ''">
+				AND age &lt; #{age}
+			</when>
+			<when test="name !=null and name != ''">
+				AND name LIKE '%${name}%'
+			</when>
+		</choose>
+	</select>
+	
+	<select id="queryUserLikeName2" resultType="User">
+		SELECT * FROM tb_user
+		<where>
+			<if test="name !=null and name != ''">
+				AND name LIKE '%${name}%'
+			</if>
+			<if test="age !=null and age != ''">
+				AND age &lt; #{age}
+			</if>
+		</where> 
+	</select>
+	
+	<select id="queryUserByIds" resultType="User">
+		SELECT * FROM tb_user WHERE id IN
+		<foreach collection="ids" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</select>
+	
+	
+	
+</mapper>
